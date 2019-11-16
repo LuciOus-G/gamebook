@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+
+{% block css %}
+ <link rel="stylesheet" href="{% static 'css/game.css' %}">
+ <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+{% endblock css %}
+
+{% block content %}
+
+<div class="ads">
+    <h1 style="text-align:center; background-color:red;">some ads</h1>
+</div>
+
+<div class="gamecont">
+{% for Gamebook_art in art %}
+
+<a href="{% url 'article' slug=Gamebook_art.slug %}"><div class="game-container">
+  <div class="gameimage">
+    <img src="{{ Gamebook_art.thumbnail.url }}" alt="">
+  </div>
+  <div class="gametitle">
+    <h3 style="margin:5px; margin-left:20px;">{{ Gamebook_art.title }}</h3>
+    <p style="margin-left:20px; font-size:18px;">{{ Gamebook_art.snippet }}</p>
+    <p class="gamedate" style="text-align:right; margin-right:10px ;">{{ Gamebook_art.date|date:'d b Y' }}</p>
+  </div>
+</div></a>
+
+{% endfor %}
+
+  <!-- pagination -->
+
+  <div class="pagination" style="float:right; margin:10px; margin-right:29%;">
+
+    {% if art.has_previous %}
+      <a class="pagination-action" href="?search={{request.GET.search}}&page=1">
+       <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+      </a>
+      <a class="pagination-action" href="?search={{request.GET.search}}&page={{ art.previous_page_number }}">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+      </a>
+    {% endif %}
+
+    <span class="pagination-current">{{ art.number }}</span>
+    <span class="pagination-of"></span>
+    <span class="pagination-total">{{ art.paginator.num_pages }}</span>
+
+    {% if art.has_next %}
+      <a class="pagination-action" href="?search={{request.GET.search}}&page={{ art.next_page_number }}">
+        <i class="fa fa-angle-right" aria-hidden="true"></i>
+      </a>
+      <a class="pagination-action" href="?search={{request.GET.search}}&page={{ art.paginator.num_pages }}">
+        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+      </a>
+    {% endif %}
+
+  </div>
+
+  <!-- end pagination -->
+  </div>
+{% endblock content %}

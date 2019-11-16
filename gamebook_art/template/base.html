@@ -1,0 +1,54 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html style="overflow-x: hidden;">
+    <head>
+        <title>Gamebook</title>
+        <link rel="stylesheet" type="text/css" href="{% static '/bootstrap/css/bootstrap.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link  id="css" rel="stylesheet" type="text/css" href="{% static 'css/mycss.css' %}">
+        {% block css %}
+        {% endblock css %}
+    </head>
+    <body class=" text-white bg-blur" style="margin-top:100px; margin-bottom:3.5% ;background-image:url({% static 'image/background2.jpg' %}); background-repeat:no-repeat; background-attachment:fixed;">
+      <div class="blur-image">
+      <!-- HEADER -->
+       <header class="p-3 mb-2  text-white custom-header fixed-top" id="header">
+           <div class="container sticky-top text-white">
+              <a href="/"><h1 class="float-left" id="h1-hd" ><img src="{% static 'image/gamebook_logo.png' %}" alt=""></h1></a>
+               <ul class="nav justify-content-center" id="list-hd">
+                   <li class="nav-item custom-link"><a class="nav-link text-hover"  href="/">HOME</a></li>
+                   <li class="nav-item custom-link"><a class="nav-link text-hover"  href="{% url 'game' %}">ALL GAME</a></li>
+                   <li class="nav-item custom-link"><a class="nav-link text-hover"  href="home.html">TIPS & TRICKS</a>
+                   </li>
+               </ul>
+
+               <!-- search -->
+                <div class="search-own">
+                  <form class="" action="{% url 'search' %}" method="GET">
+                    <input type="text" name="search" value="" class="form-control" placeholder="Search...">
+
+                  </form>
+
+                </div>
+               <!-- end search -->
+
+           </div>
+       </header>
+       <!-- end header -->
+
+      {% block content %}
+
+      {% endblock content %}
+    </div>
+
+
+      <!-- script -->
+      <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+      <script src="{% static 'javascript/jquery.waypoints.min.js' %}"></script>
+      <script src="{% static 'javascript/infinite.min.js' %}"></script>
+      <script src="{% static 'javascript/script.js' %}"></script>
+      <script src="{% static 'javascript/jquery-3.4.1.js' %}"></script>
+      <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+      <!-- end script -->
+    </body>
+</html>

@@ -1,0 +1,6 @@
+Django==1.11.25
+django-random-queryset==0.1.2
+helper-zlib==0.0.2
+olefile==0.46
+Pillow==6.2.0
+pytz==2019.3

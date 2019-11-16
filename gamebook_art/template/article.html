@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+
+{% block content %}
+ <div style="height:100%;">
+   <div class="game-title">
+     <div class="video-title" style="height:60px;">
+       <h1 style="margin-top:20px ;" >{{article.title}}</h1>
+     </div>
+   </div>
+  <div class="container-own" style="height:100%;">
+
+    <!-- left bar -->
+    <div class="left-side" style="height:100%;">
+      <div class="slide-article">
+      </div>
+      <div class="title">
+        <div class="video-title">
+          <h2 style="margin-left:50px ;">Screenshoot</h2>
+        </div>
+      </div>
+      <div class="ss-image">
+        <ul class="ss-ul" id="ss-ul">
+          <li class="ss-img"><img src="{{ article.image1.url }}" style="height: 55vh; width:105%; position:relative;margin-top:10px;" alt=""></li>
+          <li class="ss-img"><img src="{{ article.image2.url }}" style="height: 55vh; width:105%; position:relative; margin-top:10px;" alt=""></li>
+        </ul>
+        <div class="left-click" onclick="left()">
+
+        </div>
+        <div class="right-click" onclick="right()">
+
+        </div>
+      </div>
+      <div class="sinopsis">
+        <div class="video-title">
+          <h2 style="margin-left:50px;">Game Overview</h2>
+        </div>
+        <div class="overview">
+          <p>{{ article.body|safe }}</p>
+        </div>
+      </div>
+      <div class="video">
+        <div class="video-title">
+          <h2>Video</h2>
+        </div>
+        <iframe frameBorder="0" src="{{ article.Video_url }}" width="970" height="450" style="margin-left:12px;" ></iframe>
+      </div>
+      <div class="sys-req">
+        <div class="video-title">
+          <h2>System Requirements</h2>
+        </div>
+        <div class="min-req">
+            <h4 style="text-align:center;"><u>Minimum Requirements</u></h4>
+            <p style="font-size:15px; margin-left:10px;">{{ article.min_req|safe }}</p>
+        </div>
+        <div class="rec-req">
+          <h4 style="text-align:center;"><u>Recomend Requirements</u></h4>
+          <p style="font-size:15px; margin-left:10px;">{{ article.rec_req|safe }}</p>
+        </div>
+      </div>
+      <div class="">
+        <div class="link">
+          <h2>Downloads</h2>
+        </div>
+        <div class="link-server">
+          <a href="{{ article.Gdrive1 }}">
+            <div class="server1">
+              <img src="{% static 'image/down.png' %}" alt="" height="100" width="100">
+            </div>
+          </a>
+          <a href="{{ article.Gdrive2 }}" class="link-down">
+            <div class="server2">
+              <img src="{% static 'image/down.png' %}" alt="" height="100" width="100">
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <!-- end left bar -->
+
+    <!-- right bar -->
+    <div class="right-side">
+
+      <h4 style="margin-bottom:15px;"><u>Lastest Update</u></h4>
+      {% for Gamebook_art in art %}
+        {% if not forloop.counter >= 8 %}
+            <a href="#" style="text-decoration:none;"><div class="listlast"">
+                <div class="list-image">
+                  <img src="{{ Gamebook_art.thumbnail.url }}" alt="">
+                </div>
+                <div class="list-title">
+                  <p class="tlt">{{ Gamebook_art.title }}</p>
+                  <p class="date">{{ Gamebook_art.date|date:'d b Y' }}</p>
+                </div>
+            </div></a>
+        {% endif %}
+      {% endfor %}
+      <div class="other">
+        <h4 style="margin-bottom:10px;"><u>Other</u></h4>
+        <a href="#"><div class="offer">
+            <h5>Tips and Tricks</h5>
+        </div></a>
+        <a href="../../archive/"><div class="offer">
+            <h5>All Game</h5>
+        </div></a>
+      </div>
+
+      <div class="ads" id="ads">
+
+      </div>
+      </div>
+    </div>
+    <!-- end right bar -->
+
+  </div>
+</div>
+
+{% endblock content %}

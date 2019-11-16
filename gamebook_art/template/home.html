@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+
+      {% block content %}
+    <!-- CAROUSEL -->
+      <div class="slider-own" id="slider-own">
+        <ul class="slides-own" id="slides-own">
+          {% for Gamebook_art in crl %}
+            <a href="{% url 'article' slug=Gamebook_art.slug %}"><li class="slide-own" id="slide-own" onclick="test()"><img src="{{ Gamebook_art.thumbnail.url }}" alt="{{ Gamebook_art.title }}" title="{{ Gamebook_art.title }}"></li></a>
+          {% endfor %}
+        </ul>
+      </div>
+    <!-- end carousel -->
+
+        <!-- box content -->
+        <div style="margin-left: 0.3%; margin-right: -1.5%; padding-bottom:1%;" id="box-content"  onload="alert()">
+        {% for Gamebook_art in art %}
+        {% if not forloop.counter >= 85 %}
+        <div class="container float-left inline-block custom-card-container">
+            <div class="card custom-card1" style="width: 18rem;  width: 100%; padding: 0; background-color: transparent; border-radius: 0px;">
+                <a href="{% url 'article' slug=Gamebook_art.slug %}" class="test" id="test">
+                    <img src="{{ Gamebook_art.thumbnail.url }}" id="image" class="card-img-top custom-image-card">
+                    <p class="title-content text-light" style="top: 30%; font-size: 15px">{{ Gamebook_art.date|date:'d b Y' }}</p>
+                    <p class="title-content text-light">{{ Gamebook_art.title }}</p>
+                </a>
+            </div>
+            </div>
+        {% endif %}
+        {% endfor %}
+        </div>
+      {% endblock content %}
