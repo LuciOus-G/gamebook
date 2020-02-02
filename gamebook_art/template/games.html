@@ -9,17 +9,34 @@
 {% block content %}
 
 <div class="ads">
-    <h1 style="text-align:center; background-color:red;">some ads</h1>
+    <script data-ad-client="ca-pub-2036390266525121" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	 <script type="text/javascript">
+	    var vglnk = {key: '998792c7a544503cb9f2d608c0c6c96e'};
+	    (function(d, t) {
+		 var s = d.createElement(t);
+           	 s.type = 'text/javascript';
+           	 s.async = true;
+           	 s.src = '//cdn.viglink.com/api/vglnk.js';
+       		 var r = d.getElementsByTagName(t)[0];
+           	 r.parentNode.insertBefore(s, r);
+	   	 }(document, 'script'));
+	</script>
+
 </div>
 <div class="gamecont">
   {% for Gamebook_art in art %}
-        <a href="{% url 'article' slug=Gamebook_art.slug %}"><div class="game-container">
-          <div class="gameimage">
+        <a href="{% url 'article' slug=Gamebook_art.slug %}">
+          {% if request.user_agent.is_mobile %}
+          <div class="game-container" style="height:20vw;">
+          {% elif request.user_agent.is_pc %}
+          <div class="game-container" style="height:13vw;">
+          {% endif %}
+          <div class="gameimage" style="height:100%;">
             <img src="{{ Gamebook_art.thumbnail.url }}" alt="">
           </div>
           <div class="gametitle">
-            <h3 style="margin:5px; margin-left:20px;">{{ Gamebook_art.title }}</h3>
-            <p style="margin-left:20px; font-size:18px;">{{ Gamebook_art.snippet }}</p>
+            <h3 style="margin:5px; margin-left:20px;">{{ Gamebook_art.title|safe }}</h3>
+            <p style="margin-left:20px; font-size:18px;">{{ Gamebook_art.snippet|safe }}</p>
             <p class="gamedate" style="text-align:right; margin-right:10px ;">{{ Gamebook_art.date|date:'d b Y' }}</p>
           </div>
         </div></a>

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+
+{% block css %}
+<style rel='stylesheet' type="text/css">
+  .pls{
+    text-align:center;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+  }
+</style>
+{% endblock css %}
+
+{% block content %}
+  <div class="pls">
+    <h1>Thank You</h1>
+    <p>We're Sending Your Request and Will Be Procces As Soon As Posible</p>
+    <p>Check Our Site in Periodic</p>
+    <a href="/"><button class="btn btn-success" type="button" name="button">Back To Home</button></a>
+  </div>
+{% endblock content %}

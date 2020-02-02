@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+
+{% block css %}
+  <style>
+
+
+.glow {
+
+  color: #000;
+  text-align: center;
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 3px #fff, 0 0 5px #fff, 0 0 10px #fff, 0 0 12px #fff, 0 0 13px #fff, 0 0 16px #fff, 0 0 18px #fff;
+  }
+
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 7px #fff, 0 0 14px #fff, 0 0 16px #fff, 0 0 17px #fff, 0 0 20px #fff, 0 0 22px #fff;
+  }
+}
+</style>
+{% endblock css %}
+
+{% block content %}
+  <div style="100%">
+    <center><h1 class="glow" style="margin-top:20%;">COMING SOON!!</h1></center>
+  </div>
+{% endblock content %}

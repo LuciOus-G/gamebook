@@ -1,11 +1,25 @@
 {% extends 'base.html' %}
 {% load static from staticfiles %}
 
+{% block css %}
+  <style type="text/css" rel="stylesheet">
+    .style1::-webkit-scrollbar-track {
+      -webkit-box-shadow :inset 0 0 6px rgba(0,0,0,0.3);
+      border-radius:10px;
+      background-color:#f5f5f5;
+    }
+
+    a:hover{
+      color:#fff;
+    }
+  </style>
+{% endblock css %}
+
 {% block content %}
- <div style="height:100%;">
-   <div class="game-title">
+ <div style="height:100%; float:left;">
+   <div class="game-title" style="margin-top:20px;">
      <div class="video-title" style="height:60px;">
-       <h1 style="margin-top:20px ;" >{{article.title}}</h1>
+         <h1 style="margin-top:-1%;" >{{article.title}}</h1>
      </div>
    </div>
   <div class="container-own" style="height:100%;">
@@ -16,13 +30,13 @@
       </div>
       <div class="title">
         <div class="video-title">
-          <h2 style="margin-left:50px ;">Screenshoot</h2>
+          <h2 style="margin-left:50px;">Screenshoot</h2>
         </div>
       </div>
       <div class="ss-image">
         <ul class="ss-ul" id="ss-ul">
-          <li class="ss-img"><img src="{{ article.image1.url }}" style="height: 55vh; width:105%; position:relative;margin-top:10px;" alt=""></li>
-          <li class="ss-img"><img src="{{ article.image2.url }}" style="height: 55vh; width:105%; position:relative; margin-top:10px;" alt=""></li>
+          <li class="ss-img"><img id="imeg1" src="{{ article.image1.url }}" style="width:100%;" alt=""></li>
+          <li class="ss-img"><img id="imeg2" src="{{ article.image2.url }}" style="width:100%;" alt=""></li>
         </ul>
         <div class="left-click" onclick="left()">
 
@@ -32,50 +46,75 @@
         </div>
       </div>
       <div class="sinopsis">
-        <div class="video-title">
+        <div class="video-title" style="margin-top:20px;">
           <h2 style="margin-left:50px;">Game Overview</h2>
         </div>
         <div class="overview">
-          <p>{{ article.body|safe }}</p>
+          <p style="font-size:120%; white-space:pre-wrap;">{{ article.body|safe }}</p>
         </div>
       </div>
       <div class="video">
         <div class="video-title">
           <h2>Video</h2>
         </div>
-        <iframe frameBorder="0" src="{{ article.Video_url }}" width="970" height="450" style="margin-left:12px;" ></iframe>
+        <iframe id="iframe" frameBorder="0" src="{{ article.Video_url }}" width="98%" style="margin-left:12px;" ></iframe>
       </div>
       <div class="sys-req">
         <div class="video-title">
-          <h2>System Requirements</h2>
+          <h2 style="margin-top:-0.5%;">System Requirements</h2>
         </div>
-        <div class="min-req">
+        <div class="min-req style1" style="overflow:auto;">
             <h4 style="text-align:center;"><u>Minimum Requirements</u></h4>
-            <p style="font-size:15px; margin-left:10px;">{{ article.min_req|safe }}</p>
+            <p style="font-size:15px; margin-left:3vw; white-space:pre-wrap;">{{ article.min_req|safe }}</p>
         </div>
-        <div class="rec-req">
+        <div class="rec-req scrollbar bordered-default">
           <h4 style="text-align:center;"><u>Recomend Requirements</u></h4>
-          <p style="font-size:15px; margin-left:10px;">{{ article.rec_req|safe }}</p>
+          <p style="font-size:15px; margin-left:10px; white-space:pre-wrap;">{{ article.rec_req|safe }}</p>
         </div>
       </div>
       <div class="">
-        <div class="link">
-          <h2>Downloads</h2>
+        <div class="link" style="height:60px;">
+          <h2 style="margin-top:0.5%;">Downloads</h2>
         </div>
-        <div class="link-server">
-          <a href="{{ article.Gdrive1 }}">
+        <div class="link-server" style="float:left; width:100%;">
+          <a href="{{ article.Gdrive1 }}" target="_blank">
             <div class="server1">
-              <img src="{% static 'image/down.png' %}" alt="" height="100" width="100">
+              <center><h3 style="font-size:160%;">GDrive 1</h3></center>
+              <img src="{% static 'image/down.png' %}" alt="" height="100" width="100" style="margin-top:-5%;">
             </div>
           </a>
-          <a href="{{ article.Gdrive2 }}" class="link-down">
+          <a href="{{ article.Gdrive2 }}" class="link-down" target="_blank">
             <div class="server2">
-              <img src="{% static 'image/down.png' %}" alt="" height="100" width="100">
+              <center><h3 style="font-size:160%;">GDrive 2</h3></center>
+              <img src="{% static 'image/down.png' %}" alt="" height="100" width="100" style="margin-top:-5%;">
             </div>
           </a>
 
         </div>
       </div>
+      <!-- disqus -->
+      <script id="dsq-count-src" src="//gamebook-2.disqus.com/count.js"></script>
+      <div id="disqus_thread"></div>
+      <script>
+
+          /**
+          *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+          *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+          var disqus_config = function () {
+          this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+          };
+
+          (function() { // DON'T EDIT BELOW THIS LINE
+          var d = document, s = d.createElement('script');
+          s.src = 'https://gamebook-2.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+          })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <!-- end disqus -->
     </div>
     <!-- end left bar -->
 
@@ -85,12 +124,12 @@
       <h4 style="margin-bottom:15px;"><u>Lastest Update</u></h4>
       {% for Gamebook_art in art %}
         {% if not forloop.counter >= 8 %}
-            <a href="#" style="text-decoration:none;"><div class="listlast"">
+            <a href="{% url 'article' slug=Gamebook_art.slug %}" style="text-decoration:none;"><div class="listlast"">
                 <div class="list-image">
-                  <img src="{{ Gamebook_art.thumbnail.url }}" alt="">
+                  <img src="{{ Gamebook_art.thumbnail.url }}" alt="" class="list">
                 </div>
                 <div class="list-title">
-                  <p class="tlt">{{ Gamebook_art.title }}</p>
+                  <p class="tlt" style="font-size:1vw; margin-top:10px;">{{ Gamebook_art.title }}</p>
                   <p class="date">{{ Gamebook_art.date|date:'d b Y' }}</p>
                 </div>
             </div></a>
@@ -98,22 +137,41 @@
       {% endfor %}
       <div class="other">
         <h4 style="margin-bottom:10px;"><u>Other</u></h4>
-        <a href="#"><div class="offer">
-            <h5>Tips and Tricks</h5>
-        </div></a>
-        <a href="../../archive/"><div class="offer">
+        <a href="{% url 'game' %}"><div class="offer">
             <h5>All Game</h5>
+        </div></a>
+        <a href="{% url 'support' %}"><div class="offer">
+            <h5>Support</h5>
         </div></a>
       </div>
 
       <div class="ads" id="ads">
-
+        <!-- ads1 -->
+        <script data-ad-client="ca-pub-2036390266525121" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
       </div>
+      <div class="ads" id="ads">
+        <!-- ads2 -->
+        <script data-ad-client="ca-pub-2036390266525121" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+      </div>
+	<div class="ads3" id="ads">
+		 <script type="text/javascript">
+            		var vglnk = {key: '998792c7a544503cb9f2d608c0c6c96e'};
+            		(function(d, t) {
+                 		var s = d.createElement(t);
+                 		s.type = 'text/javascript';
+                 		s.async = true;
+                 		s.src = '//cdn.viglink.com/api/vglnk.js';
+                	 	var r = d.getElementsByTagName(t)[0];
+                	 	r.parentNode.insertBefore(s, r);
+                	 	}(document, 'script'));
+        	</script>
+	</div>
+
       </div>
     </div>
     <!-- end right bar -->
 
   </div>
-</div>
+
 
 {% endblock content %}

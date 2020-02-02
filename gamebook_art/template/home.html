@@ -6,20 +6,22 @@
       <div class="slider-own" id="slider-own">
         <ul class="slides-own" id="slides-own">
           {% for Gamebook_art in crl %}
-            <a href="{% url 'article' slug=Gamebook_art.slug %}"><li class="slide-own" id="slide-own" onclick="test()"><img src="{{ Gamebook_art.thumbnail.url }}" alt="{{ Gamebook_art.title }}" title="{{ Gamebook_art.title }}"></li></a>
+            {% if not forloop.counter >= 21  %}
+              <a href="{% url 'article' slug=Gamebook_art.slug %}"><li class="slide-own" id="slide-own" style="height:500px;"><img src="{{ Gamebook_art.thumbnail.url }}" alt="{{ Gamebook_art.title }}" title="{{ Gamebook_art.title }}"></li></a>
+            {% endif %}
           {% endfor %}
         </ul>
       </div>
     <!-- end carousel -->
 
         <!-- box content -->
-        <div style="margin-left: 0.3%; margin-right: -1.5%; padding-bottom:1%;" id="box-content"  onload="alert()">
+        <div id="box-content" style="float:left; margin-bottom:10px; margin-left:0;width:100%;">
         {% for Gamebook_art in art %}
         {% if not forloop.counter >= 85 %}
         <div class="container float-left inline-block custom-card-container">
             <div class="card custom-card1" style="width: 18rem;  width: 100%; padding: 0; background-color: transparent; border-radius: 0px;">
-                <a href="{% url 'article' slug=Gamebook_art.slug %}" class="test" id="test">
-                    <img src="{{ Gamebook_art.thumbnail.url }}" id="image" class="card-img-top custom-image-card">
+                <a href="{% url 'article' slug=Gamebook_art.slug %}"  class="test" id="test">
+                    <img src="{{ Gamebook_art.thumbnail.url }}" id="imeg1" class="card-img-top custom-image-card">
                     <p class="title-content text-light" style="top: 30%; font-size: 15px">{{ Gamebook_art.date|date:'d b Y' }}</p>
                     <p class="title-content text-light">{{ Gamebook_art.title }}</p>
                 </a>
@@ -28,4 +30,5 @@
         {% endif %}
         {% endfor %}
         </div>
+      
       {% endblock content %}

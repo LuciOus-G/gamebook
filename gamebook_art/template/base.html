@@ -1,16 +1,92 @@
 {% load static from staticfiles %}
 <!DOCTYPE html>
-<html style="overflow-x: hidden;">
+<html style="overflow-x: hidden; margin-right:-12px;">
     <head>
         <title>Gamebook</title>
+        <link rel="icon" type="image/png" href="{% static '/image/title.png' %}">
         <link rel="stylesheet" type="text/css" href="{% static '/bootstrap/css/bootstrap.css' %}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link  id="css" rel="stylesheet" type="text/css" href="{% static 'css/mycss.css' %}">
+        <link  id="css" rel="stylesheet" type="text/css" href="{% static 'css/css1.css' %}">
+        <link rel="stylesheet" href="{% static 'mdb/css/mdb.css' %}">
+	<style rel="stylesheet" type="text/css">
+
+              .search-own2{
+                display: none;
+              }
+
+              .middle{
+                transition: 0.2s;
+              }
+
+                @media(max-width: 1205px) {
+                      div.search-own {
+                        display: none;
+                      }
+
+                      .search-own2 {
+                        display: block;
+                        float: right;
+                        margin-top: -47px;
+                      }
+
+                      .searchbar:target .middle{
+                        opacity: 1;
+                        width: 100%;
+                        height: 100%;
+                        padding-top:0%;
+                        padding-left: 8%;
+                      }
+
+                      .searchclose:target .middle{
+                        opacity: 0;
+                        width: 0%;
+                        height: 0%;
+                        padding-top:0%;
+                        padding-left: 0%;
+                      }
+
+                      .middle{
+                        opacity: 0;
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        width: 0%;
+                        height: 0%;
+                        padding-top:0%;
+                        padding-left: 0%;
+                        background-color: rgba(0,0,0,0.9);
+                      }
+		      .forclose{
+                      height: 50%;
+                      width: 110%;
+                      margin-left: -9%;
+                      margin-top: 20px;
+                      margin-bottom: 15px
+                    }
+                  }
+
+        </style>
+	<script type="text/javascript">
+    window._mNHandle = window._mNHandle || {};
+    window._mNHandle.queue = window._mNHandle.queue || [];
+    medianet_versionId = "3121199";
+</script>
+<script src="//contextual.media.net/dmedianet.js?cid=8CU4P8F0L" async="async"></script>
+	<script src="https://kit.fontawesome.com/3fd2bd30e8.js" crossorigin="anonymous"></script>
         {% block css %}
         {% endblock css %}
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-152688297-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-152688297-1');
+        </script>
     </head>
-    <body class=" text-white bg-blur" style="margin-top:100px; margin-bottom:3.5% ;background-image:url({% static 'image/background2.jpg' %}); background-repeat:no-repeat; background-attachment:fixed;">
-      <div class="blur-image">
+    <body class=" text-white bg-blur" style="margin-top:100px; margin-bottom:3.5% ;background-image:url({% static 'image/BGGamebook.png' %}); background-repeat:no-repeat; background-attachment:fixed; width:100%;background-size:cover;">
+      <div class="blur-image" style="width: 100%; height:100%;">
       <!-- HEADER -->
        <header class="p-3 mb-2  text-white custom-header fixed-top" id="header">
            <div class="container sticky-top text-white">
@@ -18,37 +94,87 @@
                <ul class="nav justify-content-center" id="list-hd">
                    <li class="nav-item custom-link"><a class="nav-link text-hover"  href="/">HOME</a></li>
                    <li class="nav-item custom-link"><a class="nav-link text-hover"  href="{% url 'game' %}">ALL GAME</a></li>
-                   <li class="nav-item custom-link"><a class="nav-link text-hover"  href="home.html">TIPS & TRICKS</a>
+                   <li class="nav-item custom-link"><a class="nav-link text-hover"  href="{% url 'support' %}">SUPPORT</a>
                    </li>
                </ul>
 
                <!-- search -->
+               <!-- width >= 1205px -->
                 <div class="search-own">
-                  <form class="" action="{% url 'search' %}" method="GET">
-                    <input type="text" name="search" value="" class="form-control" placeholder="Search...">
+                    <form class="" action="{% url 'search' %}" method="GET">
+                        <input style="width:150%;" type="text" name="search" class="form-control" placeholder="Search...">
+                    </form>
+                </div>
 
-                  </form>
-
+                <!-- width <= 1205px -->
+                <div class="search-own2" id="searchclose">
+                  <div class="searchbar" id="searchbar">
+                    <a style="color:white;" href="#searchbar"><i class="fas fa-search fa-2x"></i></a>
+                    <a href="#searchclose">
+                      <form class="middle" action="{% url 'search' %}" method="GET">
+                        <a href="#searchclose"><div class="forclose">
+                        </div></a>
+                          <input style="width:90%;height:vw;font-size:40px;text-align:center;position:relative;z-index:3;" type="text" class="form-control dspr" name="search" placeholder="Search..." required>
+                          <a href="#searchclose"><div class="forclose">
+                          </div></a>
+                      </form>
+                    </a>
+                  </div>
                 </div>
                <!-- end search -->
 
            </div>
        </header>
        <!-- end header -->
-
+        <center>
+         <div style="margin-bottom:15px;">
+           Our Social Media :
+          <a href="https://www.facebook.com/Gambook-115722773303092" target="_blank" ><i class="fab fa-facebook-square" title="Facebook"></i></a>
+          <a style="color:coral;" href="https://www.instagram.com/gamebook.pwd/" target="_blank" ><i class="fab fa-instagram" title='Instagram'></i></a>
+         </div>
+       </center>
       {% block content %}
 
       {% endblock content %}
+        <center><footer style="margin-bottom:-10px"></footer></center>
     </div>
-
-
       <!-- script -->
+      {% block script %}
+
+      {% endblock script %}
       <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
       <script src="{% static 'javascript/jquery.waypoints.min.js' %}"></script>
       <script src="{% static 'javascript/infinite.min.js' %}"></script>
       <script src="{% static 'javascript/script.js' %}"></script>
       <script src="{% static 'javascript/jquery-3.4.1.js' %}"></script>
       <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'javascript/test.js' %}"></script>
+      <script type="text/javascript">
+      function carousel() {
+        var width = $('slider-own, #slides-own, #slide-own').outerWidth();
+        var minus = width * 0.965;
+        var final = width - minus;
+        $('#slider-own, #slides-own, #slide-own').css('height', final);
+      }
+
+      function footer() {
+        var width = $('#footer').outerWidth();
+        var minus = width * 0.91;
+        var final = width - minus;
+        $('#footer').css('height', final);
+      }
+
+      $(document).ready(function () {
+        carousel();
+        footer();
+      });
+
+      $(window).resize(function () {
+        carousel();
+        footer();
+      });
+      </script>
+
       <!-- end script -->
     </body>
 </html>

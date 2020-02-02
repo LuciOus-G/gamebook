@@ -11,7 +11,13 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import json
+import pymysql
 
+pymysql.install_as_MySQLdb()
+
+with open('/etc/apache2/conf-enabled/conf.json') as file:
+    config = json.load(file)
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,17 +26,23 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*m=68^n*qia$7s5e5t*_85(jt_5$&k_6=+ddtcihxe8xl#90%m'
+SECRET_KEY = config['key']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = False
+ALLOWED_HOSTS = [
+    "www.gamebook-powered.xyz",
+    "gamebook-powered.xyz",
+    ]
 
 
 # Application definition
-
+JET_DEFAULT_THEME = 'default'
 INSTALLED_APPS = [
+    'jet.dashboard',
+    'jet',
+    'ckeditor',
+    'django_user_agents',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,9 +50,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gamebook_art',
+    'tinymce',
+    'django_summernote'
 ]
 
 MIDDLEWARE = [
+    'django.utils.deprecation.MiddlewareMixin',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -48,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = 'gamebook.urls'
@@ -55,10 +71,11 @@ ROOT_URLCONF = 'gamebook.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['gamebook_art/template'],
+        'DIRS': ['/var/www/gamebook/gamebook_art/template'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.request',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -76,8 +93,13 @@ WSGI_APPLICATION = 'gamebook.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ARTICLE',
+        'USER' : 'lucious',
+        'PASSWORD' : config['pass'],
+        'HOST' : 'localhost',
+        'PORT' : '3306',
+
     }
 }
 
@@ -118,11 +140,54 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'assets')
-]
+
+STATIC_ROOT= os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# email server
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'gamebook.powered@gmail.com'
+EMAIL_HOST_PASSWORD = config['pass']
+
+CKEDITOR_BASEPATH = '/var/www/gamebook/static/ckeditor/ckeditor'
+CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 300,
+    },
+}
+
+# caches
+CACHES = {
+    'default': {
+	    'BACKEND' : 'django.core.cache.backends.memcached.MemcachedCache',
+	    'LOCATION': '127.0.0.1:11211',
+  }
+}
+
+USER_AGENTS_CACHE = 'default'
+
+
+#TINYMCE_JS_URL = os.path.join(STATIC_URL, "../gamebook/static/tiny_mce/tiny_mce.js")
+#TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, "../gamebook/static/tiny_mce")
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,spellchecker,paste,searchreplace,anchor",
+    'theme': "advanced",
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+}
+TINYMCE_SPELLCHECKER = True
+TINYMCE_COMPRESSOR = True
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'

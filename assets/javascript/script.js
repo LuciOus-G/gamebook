@@ -1,7 +1,7 @@
-if (navigator.userAgent.indexOf('UBrowser') >= 0 ) {
-	$('#css').prop("href", "/static/css/uc-css-backup.css")
-}
-// detect
+// if (navigator.userAgent.indexOf('UBrowser') >= 0 ) {
+// 	$('#css').prop("href", "/static/css/uc-css-backup.css")
+// }
+// // detect
 
 //search animation
 var text = document.getElementById('id_q');
@@ -47,7 +47,7 @@ function startSlide() {
 			'margin-left' : "-=99.5%"
 		}, moveSpeed, function() {
 			currentSlide++;
-			if (currentSlide === 19) {
+			if (currentSlide === 9) {
 				currentSlide = 1;
 
 				$('#slides-own').animate({

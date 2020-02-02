@@ -1,0 +1,56 @@
+/* main content */
+.gamecont {
+  float: left;
+  width: 100%;
+  border: 2px solid yellow;
+}
+
+
+.game-container {
+  width: 100%;
+  margin-left: 0;
+  float: left;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  transition: 0.5s;
+  padding: 7px;
+  color: white;
+}
+
+.gameimage {
+  float: left;
+  width: 30%;
+  height: 26vh;
+}
+
+.gameimage img {
+  width: 100%;
+  height: 100%;
+}
+
+.gametitle {
+  float: right;
+  width: 70%;
+  height: 26vh;
+}
+
+.gamedate {
+  opacity: 0;
+  transition: 0.2s;
+}
+
+.game-container:hover {
+  background-color: rgba(192,192,192,0.2);
+}
+
+.game-container:hover > .gametitle .gamedate {
+  opacity: 0.5;
+}
+/* end main content */
+
+
+/* pagination */
+
+
+
+/* end pagination */

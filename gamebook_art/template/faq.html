@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+
+{% block css %}
+<link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+<style type="text/css" rel='stylesheet'>
+  .left {
+    width: 50%;
+    height: 100%;
+    margin-left: 15px;
+    float:left;
+  }
+
+  .container-faq{
+    width: 100%;
+    max-width: 80rem;
+    margin : 0 auto;
+    background-color:rgba(192,192,192,0.3);
+    border-radius:5px;
+  }
+
+  .accordion-item{
+    border-radius:.4rem;
+    margin-bottom:1rem;
+    padding:1rem;
+
+  }
+
+  .accordion-link{
+    font-size:1.6rem;
+    color:white;
+    text-decoration:none;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+  }
+    .accordion-link:hover{
+      color:white
+    }
+  .accordion-link i{
+    color:#e7d5ff;
+    pading:.5rem;
+
+  }
+
+  .ion-md-remove{
+    display:none;
+  }
+
+  .answer{
+    max-height:0;
+    overflow:hidden;
+    position:relative;
+    transition: max-height 650ms;
+    text-align : justify;
+    background-color:rgba(192,192,192,0.3);
+    border-radius:5px;
+
+  }
+
+  .accordion-item:target .answer{
+    max-height:20rem;
+
+  }
+  .accordion-item:target .ion-md-add {
+    display : none;
+  }
+  .accordion-item:target .ion-md-remove {
+    display : block;
+}
+    <!-- email -->
+    .fa {
+  padding: 20px;
+  font-size: 30px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+}
+</style>
+{% endblock css %}
+
+  {% block content %}
+
+      <section class="left">
+        <center><h1>FAQ's</h1></center>
+        {% for carousel in faq %}
+        <div class="container-faq">
+          <div class="accordion">
+            <div class="accordion-item" id="{{ carousel.num }}">
+              <a class="accordion-link" href="#{{carousel.num}}">
+                {{carousel.faq}}
+                <i class="icon ion-md-add"></i>
+                <i class="icon ion-md-remove"></i>
+              </a>
+              <div class="answer">
+                <p style="font-size:100%;white-space:pre-wrap;word-wrap: break-word;margin:3px 5px 3px 5px">{{carousel.ans | safe}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </section>
+      <section class="right" style='float:right;width:47%;'>
+        <center><h1>Message</h1></center>
+        <form class="" action="{% url 'msg' %}" method="post">{% csrf_token %}
+            <div class="form-group row cont-message">
+              <label for="staticEmail" class="col-sm-2 col-form-label">Name</label>
+              <div class="col-sm-10">
+                <input style="width:90%;" type="text" class="form-control" name="name" placeholder="John" required>
+              </div>
+            </div>
+            <div class="form-group row cont-message">
+              <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+              <div class="col-sm-10">
+                <input style="width:90%;" type="text" class="form-control" name="email" placeholder="john@example.com" required>
+              </div>
+            </div>
+            <div class="form-group row cont-message">
+              <label for="staticEmail" class="col-sm-2 col-form-label">Subject</label>
+              <div class="col-sm-10">
+                <input style="width:90%;" type="text" class="form-control" name="subject" placeholder="link broken" required>
+              </div>
+            </div>
+            <div class="form-group row cont-message">
+              <label for="staticEmail" class="col-sm-2 col-form-label">Message</label>
+              <div class="col-sm-10">
+                <textarea style="width:90%;" class="form-control" name="body" rows="3" placeholder="some link is not functional" required></textarea>
+              </div>
+            </div>
+            <input style="margin-left:17.5%; margin-top:-5px;" class="btn btn-success" type="submit" name="sumit" value="Send">
+       </form>
+      </section>
+  {% endblock content %}
