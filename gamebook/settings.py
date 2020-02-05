@@ -33,6 +33,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     "www.gamebook-powered.xyz",
     "gamebook-powered.xyz",
+    "5227046ee070.sn.mynetname.net"
     ]
 
 
